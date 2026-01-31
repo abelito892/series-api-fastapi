@@ -1,0 +1,23 @@
+name: fastapi-series-pg
+
+services:
+  fastapi-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fastapi-app-series
+    restart: always
+    ports:
+      - "8001:8000"
+    depends_on:
+      - fastapi-pg
+
+  fastapi-pg:
+    image: postgres:16
+    container_name: fastapi-pg-series
+    environment:
+      POSTGRES_DB: seriesdb
+      POSTGRES_USER: quevedo
+      POSTGRES_PASSWORD: 1234
+    ports:
+      - "5434:5432"

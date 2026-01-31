@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nueva serie</title>
+</head>
+<body>
+
+    <h1>Añadir nueva serie</h1>
+
+    <!-- Muestra error si el backend lo envía -->
+    {% if error %}
+        <p style="color:red">{{ error }}</p>
+    {% endif %}
+
+    <!-- Formulario que envía los datos por POST -->
+    <form action="/series/nueva" method="post">
+        <label>Nombre:</label><br>
+        <input type="text" name="nombre" required><br><br>
+
+        <label>Fecha de estreno:</label><br>
+        <input type="date" name="fecha_estreno"><br><br>
+
+        <button type="submit">Guardar</button>
+    </form>
+
+    <p><a href="/series">Volver al listado</a></p>
+
+</body>
+</html>
+

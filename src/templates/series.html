@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Series</title>
+</head>
+<body>
+    <h1>Lista de series</h1>
+    <p><a href="/series/nueva">Añadir nueva serie</a></p>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>NOMBRE</th>
+            <th>FECHA ESTRENO</th>
+            <th>Operaciones</th>
+        </tr>
+        {% for serie in series %}
+        <tr>
+            <td>{{ serie.id }}</td>
+            <td>{{ serie.nombre }}</td>
+            <td>{{ serie.fecha_estreno }}</td>
+            <td><a href="/series/{{ serie.id }}">Ver detalle</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+</body>
+</html>
