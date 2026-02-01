@@ -104,3 +104,5 @@ Pasamos a arrancar docker-compose:
 ## Nota: Este ejercicio lo he hecho con ayuda de la IA ` 
 
 ## Ejercicio 5. 
+
+![alt text](image-14.png)
