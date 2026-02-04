@@ -5,15 +5,121 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
     <title>Document</title>
+    <style>
+        body {
+            transition: background-color 0.3s, color 0.3s;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        
+        body.light-mode {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        
+        body.dark-mode {
+            background-color: #1a1a1a;
+            color: #ffffff;
+        }
+        
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        body.light-mode button {
+            background-color: #f0f0f0;
+            color: #000000;
+        }
+        
+        body.dark-mode button {
+            background-color: #333333;
+            color: #ffffff;
+        }
+        
+        button:hover {
+            opacity: 0.8;
+        }
+        
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
-<body>
+<body class="light-mode">
+    <button id="themeToggle">🌙 Modo Oscuro</button>
+    
     <h1>{{mensaje}}</h1>
 
     <h2>Menú:</h2>
     <p><a href="{{ url_for('ver_series') }}">Ver lista de series</a></p>
     <p><a href="/series/nueva">Añadir serie</a></p>
 
+    <script>
+        // Función para obtener el valor de una cookie
+        function getCookie(name) {
+            const nameEQ = name + "=";
+            const cookies = document.cookie.split(';');
+            for (let cookie of cookies) {
+                cookie = cookie.trim();
+                if (cookie.indexOf(nameEQ) === 0) {
+                    return cookie.substring(nameEQ.length);
+                }
+            }
+            return null;
+        }
 
+        // Función para establecer una cookie
+        function setCookie(name, value, days = 365) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            const expires = "expires=" + date.toUTCString();
+            document.cookie = name + "=" + value + ";" + expires + ";path=/";
+        }
 
+        // Función para aplicar el tema
+        function applyTheme(theme) {
+            const body = document.body;
+            const button = document.getElementById('themeToggle');
+            
+            if (theme === 'dark') {
+                body.classList.remove('light-mode');
+                body.classList.add('dark-mode');
+                button.textContent = '☀️ Modo Claro';
+            } else {
+                body.classList.remove('dark-mode');
+                body.classList.add('light-mode');
+                button.textContent = '🌙 Modo Oscuro';
+            }
+        }
+
+        // Al cargar la página, verificar la cookie
+        window.addEventListener('DOMContentLoaded', function() {
+            const preferencias = getCookie('preferencias');
+            if (preferencias === 'dark') {
+                applyTheme('dark');
+            } else {
+                applyTheme('light');
+            }
+        });
+
+        // Al hacer clic en el botón, cambiar el tema
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            const currentPreferencias = getCookie('preferencias');
+            const newTheme = currentPreferencias === 'dark' ? 'light' : 'dark';
+            
+            setCookie('preferencias', newTheme);
+            applyTheme(newTheme);
+        });
+    </script>
 </body>
 </html>
